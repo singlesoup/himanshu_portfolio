@@ -64,12 +64,15 @@ export function Constellation() {
         ctx.fillStyle = `rgba(237, 239, 230, ${star.alpha})`
         ctx.beginPath(); ctx.arc(star.x + offsetX, star.y + offsetY, star.size, 0, Math.PI * 2); ctx.fill()
       }
+      const isMobile = window.innerWidth < 700
       projectStars.forEach((project) => {
         const x = project.x * width + offsetX * 0.45
         const y = project.y * height + offsetY * 0.45
         ctx.fillStyle = "rgba(194, 204, 122, .16)"; ctx.beginPath(); ctx.arc(x, y, 15, 0, Math.PI * 2); ctx.fill()
         ctx.fillStyle = "#C2CC7A"; ctx.beginPath(); ctx.arc(x, y, 3, 0, Math.PI * 2); ctx.fill()
-        ctx.font = "500 10px Inter, sans-serif"; ctx.letterSpacing = "1px"; ctx.fillText(project.label, x + 12, y + 4)
+        if (!isMobile) {
+          ctx.font = "500 10px Inter, sans-serif"; ctx.letterSpacing = "1px"; ctx.fillText(project.label, x + 12, y + 4)
+        }
       })
       if (!reduced) frame = requestAnimationFrame(draw)
     }

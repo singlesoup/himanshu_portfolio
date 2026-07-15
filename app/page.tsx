@@ -1,3 +1,4 @@
+import { Fragment } from "react"
 import { ArrowDown, ArrowRight, ArrowUpRight, Asterisk, Download } from "lucide-react"
 import { Constellation } from "@/components/constellation"
 import { ProjectCard } from "@/components/project-card"
@@ -6,6 +7,7 @@ import { SectionHeading } from "@/components/section-heading"
 import { navigation, principles, projects, skillGroups, socials, timeline } from "@/lib/content"
 
 export default function Home() {
+  const marqueeItems = ["Open to APM", "AI PM", "Product Builder", "Bengaluru / Remote / Hybrid"]
   return (
     <main>
       <header className="site-header">
@@ -36,7 +38,7 @@ export default function Home() {
         </div>
       </section>
 
-      <div className="marquee" aria-label="Open to Associate Product Manager, AI Product Manager, and Product Builder roles"><div><span>Open to APM</span><i /> <span>AI PM</span><i /> <span>Product Builder</span><i /> <span>Bengaluru / Remote / Hybrid</span><i /><span>Open to APM</span><i /> <span>AI PM</span><i /> <span>Product Builder</span><i /></div></div>
+      <div className="marquee" aria-label="Open to Associate Product Manager, AI Product Manager, and Product Builder roles"><div>{[0, 1].map((group) => (<Fragment key={group}>{marqueeItems.map((item, i) => (<Fragment key={i}><span>{item}</span><i /></Fragment>))}</Fragment>))}</div></div>
 
       <section className="section about" id="about">
         <SectionHeading index="01" title="About / Why I build" note="Engineering taught me how systems work. Product taught me which systems are worth building." />
@@ -74,7 +76,7 @@ export default function Home() {
             <h2>Let&apos;s build the next thing—<em>to the moon.</em></h2>
             <a className="contact-mail" href="mailto:himanshu.nawalkar@gmail.com">Contact me<ArrowUpRight aria-hidden="true" /></a>
           </Reveal>
-          <footer><div>{socials.map((social) => <a key={social.label} href={social.href} target={social.href.startsWith("http") ? "_blank" : undefined} rel="noreferrer">{social.label}</a>)}</div><p>Portfolio v1.0 — 2026 · Vibe-coded with love in India by Himanshu Nawalkar</p></footer>
+          <footer><div>{socials.map((social) => <a key={social.label} href={social.href} target={social.href.startsWith("http") ? "_blank" : undefined} rel="noreferrer">{social.label}</a>)}</div><p>Portfolio v1.0 — 2026 · Vibe-coded with love in India by Himanshu Nawalkar · Vercel Analytics</p></footer>
         </div>
       </section>
     </main>

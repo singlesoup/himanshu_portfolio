@@ -190,6 +190,20 @@ footer p { margin: 0; }
   .moon-wrap { width: 640px; right: 2vw; }
 }
 
+@media (max-width: 699px) {
+  /* Dim the constellation behind the hero on small screens and add a soft
+     scrim so the large headline stays legible over the star field. */
+  .constellation { opacity: .55; }
+  .hero-content::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    pointer-events: none;
+    background: radial-gradient(ellipse at 50% 42%, rgba(12, 14, 9, .62), rgba(12, 14, 9, .12) 55%, transparent 75%);
+  }
+}
+
 @media (prefers-reduced-motion: reduce) {
   html { scroll-behavior: auto; }
   *,*::before,*::after { animation-duration: .01ms !important; animation-iteration-count: 1 !important; transition-duration: .01ms !important; }
