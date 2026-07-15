@@ -1,49 +1,35 @@
-import { Analytics } from '@vercel/analytics/next'
-import type { Metadata, Viewport } from 'next'
-import './globals.css'
+import { Analytics } from "@vercel/analytics/next"
+import type { Metadata, Viewport } from "next"
+import { Inter, Space_Grotesk } from "next/font/google"
+import "./globals.css"
+
+const inter = Inter({ subsets: ["latin"], variable: "--font-inter", display: "swap" })
+const spaceGrotesk = Space_Grotesk({ subsets: ["latin"], variable: "--font-space", display: "swap" })
 
 export const metadata: Metadata = {
-  title: 'v0 App',
-  description: 'Created with v0',
-  generator: 'v0.app',
-  icons: {
-    icon: [
-      {
-        url: '/icon-light-32x32.png',
-        media: '(prefers-color-scheme: light)',
-      },
-      {
-        url: '/icon-dark-32x32.png',
-        media: '(prefers-color-scheme: dark)',
-      },
-      {
-        url: '/icon.svg',
-        type: 'image/svg+xml',
-      },
-    ],
-    apple: '/apple-icon.png',
+  title: "Himanshu Nawalkar — Technical Product Manager",
+  description: "Portfolio of Himanshu Nawalkar, a mobile engineer turned Technical APM specializing in 0→1 execution, consumer products, and AI prototyping.",
+  generator: "v0.app",
+  openGraph: {
+    title: "Himanshu Nawalkar — Technical Product Manager",
+    description: "0→1 product execution, consumer apps, and AI prototypes—from first signal to shipped system.",
+    type: "website",
+    locale: "en_IN",
   },
 }
 
 export const viewport: Viewport = {
-  colorScheme: 'light dark',
-  themeColor: [
-    { media: '(prefers-color-scheme: light)', color: 'white' },
-    { media: '(prefers-color-scheme: dark)', color: 'black' },
-  ],
+  colorScheme: "dark",
+  themeColor: "#0C0E09",
+  width: "device-width",
+  initialScale: 1,
+  userScalable: true,
 }
 
-export default function RootLayout({
-  children,
-}: Readonly<{
-  children: React.ReactNode
-}>) {
+export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
   return (
-    <html lang="en">
-      <body className="antialiased">
-        {children}
-        {process.env.NODE_ENV === 'production' && <Analytics />}
-      </body>
+    <html lang="en" className={`bg-background ${inter.variable} ${spaceGrotesk.variable}`}>
+      <body className="font-sans antialiased">{children}{process.env.NODE_ENV === "production" && <Analytics />}</body>
     </html>
   )
 }
