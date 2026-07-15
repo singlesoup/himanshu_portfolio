@@ -4,7 +4,7 @@ Personal portfolio site for Himanshu Nawalkar (Associate / Technical Product Man
 Built with **Next.js 16 (App Router) + TypeScript + Tailwind CSS + shadcn/ui**, deployed on **Vercel**.
 
 ## Live
-- Production: https://himanshu-portfolio-henna.vercel.app
+- Production: [Live](https://himanshu-nawalkar-portfolio.vercel.app/)
 - Custom domain (when configured): TBD
 
 ## Tech Stack
