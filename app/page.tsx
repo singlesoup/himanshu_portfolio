@@ -4,7 +4,6 @@ import { Constellation } from "@/components/constellation"
 import { ProjectCard } from "@/components/project-card"
 import { Reveal } from "@/components/reveal"
 import { SectionHeading } from "@/components/section-heading"
-import { VisitorCount } from "@/components/visitor-count"
 import { navigation, principles, projects, skillGroups, socials, timeline } from "@/lib/content"
 
 export default function Home() {
@@ -89,7 +88,7 @@ export default function Home() {
             <h2>Let&apos;s build the next thing—<em>to the moon.</em></h2>
             <a className="contact-mail" href="mailto:himanshu.nawalkar@gmail.com">Contact me<ArrowUpRight aria-hidden="true" /></a>
           </Reveal>
-          <footer><div>{socials.map((social) => <a key={social.label} href={social.href} target={social.href.startsWith("http") ? "_blank" : undefined} rel="noreferrer">{social.label}</a>)}</div><p>Portfolio v1.0 — 2026 · Vibe-coded with love in India by Himanshu Nawalkar <VisitorCount /></p></footer>
+          <footer><div>{socials.map((social) => <a key={social.label} href={social.href} target={social.href.startsWith("http") ? "_blank" : undefined} rel="noreferrer">{social.label}</a>)}</div><p>Portfolio v1.0 — 2026 · Vibe-coded with love in India by Himanshu Nawalkar</p></footer>
         </div>
       </section>
     </main>
