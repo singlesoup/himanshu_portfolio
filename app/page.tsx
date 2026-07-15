@@ -29,7 +29,7 @@ export default function Home() {
             <p>Mobile Engineer turned Technical APM specializing in 0→1 product execution. Now using AI to build user-centric products from first signal to shipped system.</p>
             <div className="hero-actions">
               <a className="button-primary" href="#work">View selected work<ArrowDown size={16} aria-hidden="true" /></a>
-              <span className="button-ghost disabled" aria-label="Resume PDF forthcoming"><Download size={16} aria-hidden="true" />Resume forthcoming</span>
+              <a className="button-ghost" href="/Himanshu-Nawalkar-Resume.pdf" target="_blank" rel="noreferrer"><Download size={16} aria-hidden="true" />View resume</a>
             </div>
           </div>
           <div className="hero-socials">{socials.map((social) => <a key={social.label} href={social.href} target={social.href.startsWith("http") ? "_blank" : undefined} rel="noreferrer">{social.label}<ArrowUpRight size={12} aria-hidden="true" /></a>)}</div>

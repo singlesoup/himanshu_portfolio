@@ -10,6 +10,7 @@ export const metadata: Metadata = {
   title: "Himanshu Nawalkar — Technical Product Manager",
   description: "Portfolio of Himanshu Nawalkar, a mobile engineer turned Technical APM specializing in 0→1 execution, consumer products, and AI prototyping.",
   generator: "v0.app",
+  metadataBase: new URL("https://himanshu-portfolio.vercel.app"),
   openGraph: {
     title: "Himanshu Nawalkar — Technical Product Manager",
     description: "0→1 product execution, consumer apps, and AI prototypes—from first signal to shipped system.",
