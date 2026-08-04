@@ -2,6 +2,7 @@ import { Analytics } from "@vercel/analytics/next"
 import type { Metadata, Viewport } from "next"
 import { Inter, Space_Grotesk } from "next/font/google"
 import "./globals.css"
+import { CursorGlow } from "@/components/cursor-glow"
 
 const inter = Inter({ subsets: ["latin"], variable: "--font-inter", display: "swap" })
 const spaceGrotesk = Space_Grotesk({ subsets: ["latin"], variable: "--font-space", display: "swap" })
@@ -31,6 +32,7 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
   return (
     <html lang="en" className={`bg-background ${inter.variable} ${spaceGrotesk.variable}`}>
       <body className="font-sans antialiased">
+        <CursorGlow />
         {children}
         <Analytics />
       </body>

@@ -4,6 +4,7 @@ import type { Project } from "@/lib/content"
 const statusClass = { Shipped: "status-shipped", "In progress": "status-progress", Planned: "status-planned" }
 
 export function ProjectCard({ project, index }: { project: Project; index: number }) {
+  const firstLink = project.links[0]
   return (
     <article id={`project-${project.id}`} className={`project-card ${project.featured ? "project-featured" : ""}`}>
       <div className="project-topline">
@@ -12,7 +13,11 @@ export function ProjectCard({ project, index }: { project: Project; index: numbe
       </div>
       <div className="project-copy">
         <p className="eyebrow">{project.type}</p>
-        <h3>{project.title}</h3>
+        {firstLink ? (
+          <h3><a className="project-title-link" href={firstLink.href} target="_blank" rel="noreferrer">{project.title}</a></h3>
+        ) : (
+          <h3>{project.title}</h3>
+        )}
         <p className="project-tagline">{project.tagline}</p>
         <p className="project-impact">{project.impact}</p>
       </div>
