@@ -1,12 +1,28 @@
-import { Fragment } from "react"
-import { ArrowDown, ArrowRight, ArrowUpRight, Asterisk, Download } from "lucide-react"
+"use client"
+
+import { Fragment, useEffect, useState } from "react"
+import { ArrowDown, ArrowRight, ArrowUpRight, Asterisk, Download, X } from "lucide-react"
 import { Constellation } from "@/components/constellation"
 import { ProjectCard } from "@/components/project-card"
 import { Reveal } from "@/components/reveal"
 import { SectionHeading } from "@/components/section-heading"
-import { navigation, principles, projects, skillGroups, socials, timeline } from "@/lib/content"
+import { CaseCarousel } from "@/components/case-carousel"
+import { CaseCard } from "@/components/case-card"
+import { navigation, principles, projects, caseStudies, skillGroups, socials, experience } from "@/lib/content"
 
 export default function Home() {
+  const [activeModal, setActiveModal] = useState<string | null>(null)
+  const [resumeOpen, setResumeOpen] = useState(false)
+  const activeStudy = caseStudies.find((s) => s.id === activeModal) ?? null
+
+  useEffect(() => {
+    if (!activeModal && !resumeOpen) return
+    const onKey = (e: KeyboardEvent) => { if (e.key === "Escape") { setActiveModal(null); setResumeOpen(false) } }
+    document.addEventListener("keydown", onKey)
+    document.body.style.overflow = "hidden"
+    return () => { document.removeEventListener("keydown", onKey); document.body.style.overflow = "" }
+  }, [activeModal, resumeOpen])
+
   const marqueeItems = [
     "Open to APM",
     "AI PM",
@@ -42,8 +58,8 @@ export default function Home() {
           <div className="hero-lower">
             <p>Mobile Engineer turned Technical APM specializing in 0→1 product execution. Now using AI to build user-centric products from first signal to shipped system.</p>
             <div className="hero-actions">
-              <a className="button-primary" href="#work">View selected work<ArrowDown size={16} aria-hidden="true" /></a>
-              <a className="button-ghost" href="/Himanshu-Nawalkar-Resume.pdf" target="_blank" rel="noreferrer"><Download size={16} aria-hidden="true" />View resume</a>
+              <a className="button-primary" href="#work">View my work<ArrowDown size={16} aria-hidden="true" /></a>
+              <a className="button-ghost" href="/Himanshu-Nawalkar-Resume.pdf" target="_blank" rel="noreferrer" onClick={(e) => { e.preventDefault(); setResumeOpen(true) }}><Download size={16} aria-hidden="true" />View resume</a>
             </div>
           </div>
           <div className="hero-socials">{socials.map((social) => <a key={social.label} href={social.href} target={social.href.startsWith("http") ? "_blank" : undefined} rel="noreferrer">{social.label}<ArrowUpRight size={12} aria-hidden="true" /></a>)}</div>
@@ -64,25 +80,52 @@ export default function Home() {
         </Reveal>
       </section>
 
-      <section className="section" id="timeline">
-        <SectionHeading index="02" title="Timeline" note="Five versions. One through-line: getting closer to the product decision." />
-        <Reveal className="timeline-list">{timeline.map((item) => <article key={item.version}><div className="timeline-version">{item.version}</div><div className="timeline-period">{item.period}</div><div className="timeline-role"><h3>{item.organization}</h3><p>{item.role}</p></div><p className="timeline-metric">{item.metric}</p></article>)}</Reveal>
+      <section className="section experience" id="work-experience">
+        <SectionHeading index="02" title="Work Experience" note="End-to-end ownership through discovery → prioritization → delivery → adoption, collaborating closely with stakeholders and engineering." />
+        <Reveal className="experience-list">
+          {experience.map((job) => (
+            <article key={job.company} className="experience-item">
+              <div className="experience-head">
+                <div>
+                  <h3 className="experience-company">{job.company}</h3>
+                  <span className="experience-location">{job.location}</span>
+                </div>
+                <span className="experience-period">{job.period}</span>
+              </div>
+              <p className="experience-role">{job.role}</p>
+              <p className="experience-blurb">{job.blurb}</p>
+              <ul className="experience-bullets">
+                {job.bullets.map((b, i) => <li key={i}>{b}</li>)}
+              </ul>
+            </article>
+          ))}
+        </Reveal>
+      </section>
+
+      <section className="section case-studies" id="case-studies">
+        <SectionHeading index="03" title="Case studies" note="Product sense, strategy and teardown work — sharpening the thinking behind the build." />
+        <p className="case-hint">{caseStudies.length} studies · drag · scroll · click</p>
+        <CaseCarousel>
+          {caseStudies.map((study, i) => (
+            <CaseCard key={study.id} study={study} index={i} total={caseStudies.length} onOpen={() => setActiveModal(study.id)} />
+          ))}
+        </CaseCarousel>
       </section>
 
       <section className="section work-section" id="work">
-        <SectionHeading index="03" title="Selected work" note="Products shipped, systems improved, and studies that sharpened the product sense behind the build." />
+        <SectionHeading index="04" title="Selected work" note="Products shipped, systems improved, and studies that sharpened the product sense behind the build." />
         <Reveal className="project-grid">{projects.map((project, index) => <ProjectCard key={project.id} project={project} index={index} />)}</Reveal>
       </section>
 
       <section className="section" id="skills">
-        <SectionHeading index="04" title="Working set" note="A practical toolkit for moving between users, strategy, prototype and delivery." />
+        <SectionHeading index="05" title="Skills" note="A practical toolkit for moving between users, strategy, prototype and delivery." />
         <Reveal className="skills-grid">{skillGroups.map((group, index) => <article key={group.group}><span className="skill-number">0{index + 1}</span><h3>{group.group}</h3><div>{group.items.map((skill) => <span key={skill}>{skill}</span>)}</div></article>)}</Reveal>
       </section>
 
       <section className="contact" id="contact">
         <div className="moon-wrap" aria-hidden="true"><div className="orbit orbit-one" /><div className="orbit orbit-two" /><div className="moon"><span /></div></div>
         <div className="contact-content">
-          <SectionHeading index="05" title="Contact" />
+          <SectionHeading index="06" title="Contact" />
           <Reveal>
             <p className="contact-kicker">Have a hard problem, an early idea, or a role where building matters?</p>
             <h2>Let&apos;s build the next thing—<em>to the moon.</em></h2>
@@ -91,6 +134,43 @@ export default function Home() {
           <footer><div>{socials.map((social) => <a key={social.label} href={social.href} target={social.href.startsWith("http") ? "_blank" : undefined} rel="noreferrer">{social.label}</a>)}</div><p>Portfolio v1.0 — 2026 · Vibe-coded with love in India by Himanshu Nawalkar</p></footer>
         </div>
       </section>
-    </main>
-  )
+
+      {activeStudy && (
+        <div className="modal-overlay" role="dialog" aria-modal="true" aria-label={activeStudy.title} onClick={() => setActiveModal(null)}>
+          <div className="modal" onClick={(e) => e.stopPropagation()}>
+            <div className="modal-head">
+              <div className="modal-meta">
+                <span className="case-type">{activeStudy.type}</span>
+                <span className="case-date">{activeStudy.date}</span>
+              </div>
+              <button type="button" className="modal-close" aria-label="Close" onClick={() => setActiveModal(null)}><X size={18} aria-hidden="true" /></button>
+            </div>
+            <h2 className="modal-title">{activeStudy.title}</h2>
+            <p className="modal-blurb">{activeStudy.blurb}</p>
+            <iframe className="modal-frame" src={activeStudy.href} title={activeStudy.title} loading="lazy" />
+            <a className="modal-open" href={activeStudy.href} target="_blank" rel="noreferrer">Open in new tab<ArrowUpRight size={14} aria-hidden="true" /></a>
+          </div>
+        </div>
+      )}
+
+      {resumeOpen && (
+        <div className="modal-overlay" role="dialog" aria-modal="true" aria-label="Himanshu Nawalkar resume" onClick={() => setResumeOpen(false)}>
+          <div className="modal" onClick={(e) => e.stopPropagation()}>
+            <div className="modal-head">
+              <div className="modal-meta">
+                <span className="case-type">Resume</span>
+                <span className="case-date">Himanshu Nawalkar</span>
+              </div>
+              <button type="button" className="modal-close" aria-label="Close" onClick={() => setResumeOpen(false)}><X size={18} aria-hidden="true" /></button>
+            </div>
+            <h2 className="modal-title">Resume</h2>
+            <p className="modal-blurb">Associate / Technical Product Manager — full work history, skills and highlights.</p>
+            <iframe className="modal-frame" src="/Himanshu-Nawalkar-Resume.pdf" title="Himanshu Nawalkar resume" loading="lazy" />
+            <a className="modal-open" href="/Himanshu-Nawalkar-Resume.pdf" target="_blank" rel="noreferrer">Open in new tab<ArrowUpRight size={14} aria-hidden="true" /></a>
+          </div>
+        </div>
+      )}
+
+  </main>
+)
 }
