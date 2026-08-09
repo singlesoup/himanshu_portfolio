@@ -8,20 +8,26 @@ import { Reveal } from "@/components/reveal"
 import { SectionHeading } from "@/components/section-heading"
 import { CaseCarousel } from "@/components/case-carousel"
 import { CaseCard } from "@/components/case-card"
+import { FeaturedTalk } from "@/components/featured-talk"
+import { QAChat } from "@/components/qa-chat"
+import { ContactDialog } from "@/components/contact-dialog"
 import { navigation, principles, projects, caseStudies, skillGroups, socials, experience } from "@/lib/content"
 
 export default function Home() {
   const [activeModal, setActiveModal] = useState<string | null>(null)
   const [resumeOpen, setResumeOpen] = useState(false)
+  const [contactOpen, setContactOpen] = useState(false)
   const activeStudy = caseStudies.find((s) => s.id === activeModal) ?? null
 
   useEffect(() => {
-    if (!activeModal && !resumeOpen) return
-    const onKey = (e: KeyboardEvent) => { if (e.key === "Escape") { setActiveModal(null); setResumeOpen(false) } }
+    if (!activeModal && !resumeOpen && !contactOpen) return
+    const onKey = (e: KeyboardEvent) => {
+      if (e.key === "Escape") { setActiveModal(null); setResumeOpen(false); setContactOpen(false) }
+    }
     document.addEventListener("keydown", onKey)
     document.body.style.overflow = "hidden"
     return () => { document.removeEventListener("keydown", onKey); document.body.style.overflow = "" }
-  }, [activeModal, resumeOpen])
+  }, [activeModal, resumeOpen, contactOpen])
 
   const marqueeItems = [
     "Open to APM",
@@ -80,6 +86,8 @@ export default function Home() {
         </Reveal>
       </section>
 
+      <QAChat />
+
       <section className="section experience" id="work-experience">
         <SectionHeading index="02" title="Work Experience" note="End-to-end ownership through discovery → prioritization → delivery → adoption, collaborating closely with stakeholders and engineering." />
         <Reveal className="experience-list">
@@ -122,6 +130,8 @@ export default function Home() {
         <Reveal className="skills-grid">{skillGroups.map((group, index) => <article key={group.group}><span className="skill-number">0{index + 1}</span><h3>{group.group}</h3><div>{group.items.map((skill) => <span key={skill}>{skill}</span>)}</div></article>)}</Reveal>
       </section>
 
+      <FeaturedTalk />
+
       <section className="contact" id="contact">
         <div className="moon-wrap" aria-hidden="true"><div className="orbit orbit-one" /><div className="orbit orbit-two" /><div className="moon"><span /></div></div>
         <div className="contact-content">
@@ -129,9 +139,9 @@ export default function Home() {
           <Reveal>
             <p className="contact-kicker">Have a hard problem, an early idea, or a role where building matters?</p>
             <h2>Let&apos;s build the next thing—<em>to the moon.</em></h2>
-            <a className="contact-mail" href="mailto:himanshu.nawalkar@gmail.com">Contact me<ArrowUpRight aria-hidden="true" /></a>
+            <a className="contact-mail" href="mailto:himanshu.nawalkar@gmail.com" onClick={(e) => { e.preventDefault(); setContactOpen(true) }}>Contact me<ArrowUpRight aria-hidden="true" /></a>
           </Reveal>
-          <footer><div>{socials.map((social) => <a key={social.label} href={social.href} target={social.href.startsWith("http") ? "_blank" : undefined} rel="noreferrer">{social.label}</a>)}</div><p>Portfolio v1.0 — 2026 · Vibe-coded with love in India by Himanshu Nawalkar</p></footer>
+          <footer><div>{socials.map((social) => <a key={social.label} href={social.href} target={social.href.startsWith("http") ? "_blank" : undefined} rel="noreferrer">{social.label}</a>)}</div><p>Portfolio v1.0 — 2026 · Vibe-coded with love by Himanshu Nawalkar</p></footer>
         </div>
       </section>
 
@@ -170,6 +180,8 @@ export default function Home() {
           </div>
         </div>
       )}
+
+      {contactOpen && <ContactDialog onClose={() => setContactOpen(false)} />}
 
   </main>
 )
