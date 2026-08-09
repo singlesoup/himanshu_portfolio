@@ -279,3 +279,82 @@ footer p { margin: 0; }
   *,*::before,*::after { animation-duration: .01ms !important; animation-iteration-count: 1 !important; transition-duration: .01ms !important; }
   .reveal { opacity: 1; transform: none; }
 }
+
+/* ---------- Featured talk ---------- */
+.featured-talk-grid { display: grid; gap: 2.5rem; align-items: center; }
+.featured-talk-player { display: flex; flex-direction: column; gap: 1rem; }
+.featured-talk-frame { position: relative; width: 100%; aspect-ratio: 16 / 9; background: #000; border: 1px solid var(--border); border-radius: var(--radius-lg); overflow: hidden; }
+.featured-talk-frame iframe { position: absolute; inset: 0; width: 100%; height: 100%; border: 0; }
+.featured-talk-watch { display: inline-flex; align-items: center; gap: .4rem; font: 500 .72rem var(--font-space); text-transform: uppercase; letter-spacing: .08em; color: var(--accent); width: fit-content; }
+.featured-talk-watch:hover { color: var(--foreground); }
+.featured-talk-kicker { font: 600 .7rem var(--font-space); letter-spacing: .12em; color: var(--accent); }
+.featured-talk-meta h2 { font-size: clamp(1.6rem, 4vw, 2.4rem); margin: .6rem 0; line-height: 1.1; }
+.featured-talk-tag { display: inline-block; font-size: .72rem; color: var(--muted-foreground); border: 1px solid var(--border); border-radius: 999px; padding: .2rem .7rem; margin-bottom: 1rem; }
+.featured-talk-meta p { color: var(--muted-foreground); max-width: 42ch; }
+
+/* ---------- QnA chat (terminal style) ---------- */
+.qa-window { border: 1px solid var(--border); border-radius: var(--radius-lg); background: #0a0c07; overflow: hidden; font-family: var(--font-space), ui-monospace, monospace; }
+.qa-titlebar { display: flex; align-items: center; gap: .8rem; padding: .7rem 1rem; border-bottom: 1px solid var(--border); font-size: .7rem; color: var(--muted-foreground); }
+.qa-dots { display: inline-flex; gap: .35rem; }
+.qa-dots i { width: .6rem; height: .6rem; border-radius: 50%; background: #3a3d2e; }
+.qa-dots i:first-child { background: #b04a4a; }
+.qa-dots i:nth-child(2) { background: #b0a04a; }
+.qa-dots i:nth-child(3) { background: #5ab04a; }
+.qa-path { color: var(--muted-foreground); }
+.qa-ready { margin-left: auto; display: inline-flex; align-items: center; gap: .4rem; color: var(--accent); }
+.qa-ready i { width: .5rem; height: .5rem; border-radius: 50%; background: var(--accent); box-shadow: 0 0 10px var(--accent); }
+.qa-thread { padding: 1.2rem 1rem; min-height: 12rem; max-height: 22rem; overflow-y: auto; display: flex; flex-direction: column; gap: .8rem; font-size: .85rem; line-height: 1.5; }
+.qa-status { color: var(--accent); margin: 0; }
+.qa-await { color: var(--muted-foreground); font-style: italic; margin: 0; opacity: .6; }
+.qa-msg { display: flex; gap: .6rem; }
+.qa-msg p { margin: 0; color: var(--foreground); }
+.qa-role { color: var(--accent); flex: none; }
+.qa-user .qa-role { color: var(--secondary); }
+.qa-suggest { display: flex; flex-wrap: wrap; gap: .5rem; padding: .9rem 1rem; border-top: 1px solid var(--border); }
+.qa-pill { font: 500 .72rem var(--font-space); color: var(--foreground); background: var(--card); border: 1px solid var(--border); border-radius: 999px; padding: .45rem .85rem; cursor: pointer; transition: border-color .2s, color .2s; }
+.qa-pill:hover { border-color: var(--accent); color: var(--accent); }
+.qa-pill.is-asked { color: var(--muted-foreground); border-color: transparent; }
+.qa-input { display: flex; align-items: center; gap: .6rem; padding: .7rem 1rem; border-top: 1px solid var(--border); }
+.qa-prompt { color: var(--accent); flex: none; }
+.qa-input input { flex: 1; background: transparent; border: 0; color: var(--foreground); font: inherit; outline: none; }
+.qa-input input::placeholder { color: var(--muted-foreground); }
+.qa-count { color: var(--muted-foreground); font-size: .68rem; flex: none; }
+.qa-send { display: inline-flex; align-items: center; justify-content: center; width: 1.9rem; height: 1.9rem; border-radius: var(--radius-sm); background: var(--accent); color: var(--accent-foreground); border: 0; cursor: pointer; transition: opacity .2s; }
+.qa-send:disabled { opacity: .35; cursor: not-allowed; }
+.qa-footer { display: flex; justify-content: space-between; padding: .55rem 1rem; border-top: 1px solid var(--border); font-size: .62rem; letter-spacing: .08em; color: var(--muted-foreground); }
+.qa-footer span { display: inline-flex; align-items: center; gap: .35rem; }
+
+@media (min-width: 900px) {
+  .featured-talk-grid { grid-template-columns: 1.4fr 1fr; gap: 4vw; }
+}
+
+/* ---------- Contact dialog ---------- */
+.contact-overlay { position: fixed; inset: 0; z-index: 100; display: flex; align-items: center; justify-content: center; padding: 1.25rem; background: rgba(8,9,6,.72); backdrop-filter: blur(6px); animation: fade-in .2s ease; }
+.contact-card { width: min(34rem, 100%); background: #13150d; border: 1px solid var(--border); border-radius: var(--radius-lg); padding: 1.4rem; box-shadow: 0 30px 80px rgba(0,0,0,.55); animation: pop-in .22s ease; }
+.contact-card-head { display: flex; align-items: center; justify-content: space-between; }
+.contact-eyebrow { display: inline-flex; align-items: center; gap: .5rem; font: 600 .62rem var(--font-space); letter-spacing: .14em; color: var(--muted-foreground); }
+.contact-eyebrow i { width: .45rem; height: .45rem; border-radius: 50%; background: var(--accent); box-shadow: 0 0 10px var(--accent); }
+.contact-close { display: inline-flex; align-items: center; justify-content: center; width: 1.8rem; height: 1.8rem; border-radius: var(--radius-sm); background: transparent; border: 1px solid var(--border); color: var(--muted-foreground); cursor: pointer; transition: color .2s, border-color .2s; }
+.contact-close:hover { color: var(--foreground); border-color: var(--accent); }
+.contact-headline { font-size: clamp(1.5rem, 4vw, 2rem); margin: 1rem 0 .5rem; line-height: 1.1; }
+.contact-blurb { color: var(--muted-foreground); font-size: .85rem; margin: 0 0 1.2rem; max-width: 36ch; }
+.contact-grid { display: grid; grid-template-columns: 1fr; gap: .7rem; }
+.contact-tile { display: flex; flex-direction: column; gap: .3rem; padding: .9rem 1rem; border: 1px solid var(--border); border-radius: var(--radius-md); background: #181a11; transition: border-color .2s, transform .15s; }
+.contact-tile:hover { border-color: var(--accent); transform: translateY(-2px); }
+.contact-tile.is-primary { border-color: var(--accent); }
+.contact-tile-label { font: 600 .82rem var(--font-space); color: var(--foreground); }
+.contact-tile-sub { font-size: .72rem; color: var(--muted-foreground); }
+.contact-channels-head { display: flex; align-items: center; gap: .5rem; margin: 1.3rem 0 .6rem; font: 600 .62rem var(--font-space); letter-spacing: .14em; color: var(--muted-foreground); }
+.contact-channels-head i { width: .45rem; height: .45rem; border-radius: 50%; background: var(--accent); box-shadow: 0 0 10px var(--accent); }
+.contact-channels { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; }
+.contact-channels li { display: flex; align-items: center; justify-content: space-between; padding: .55rem 0; border-top: 1px solid var(--border); }
+.contact-channel-name { font-size: .82rem; color: var(--foreground); }
+.contact-channel-handle { font-size: .76rem; color: var(--muted-foreground); transition: color .2s; }
+.contact-channel-handle:hover { color: var(--accent); }
+.contact-card-foot { display: flex; align-items: center; justify-content: space-between; margin-top: 1.2rem; padding-top: .9rem; border-top: 1px solid var(--border); font: 600 .6rem var(--font-space); letter-spacing: .12em; color: var(--muted-foreground); }
+.contact-card-foot span { display: inline-flex; align-items: center; gap: .4rem; }
+.contact-card-foot i { width: .45rem; height: .45rem; border-radius: 50%; background: var(--accent); box-shadow: 0 0 10px var(--accent); }
+@keyframes fade-in { from { opacity: 0 } to { opacity: 1 } }
+@keyframes pop-in { from { opacity: 0; transform: translateY(8px) scale(.98) } to { opacity: 1; transform: none } }
+@keyframes qa-blink { 0%, 49% { opacity: 1 } 50%, 100% { opacity: 0 } }
+.qa-cursor { display: inline-block; margin-left: 1px; color: var(--accent); animation: qa-blink 1s steps(1) infinite; font-weight: 700; }

@@ -124,3 +124,94 @@ export const skillGroups = [
   { group: "Collaboration & Strategy", items: ["Stakeholder Management", "Cross-functional Collaboration", "Market Research", "Competitor Analysis", "User Stories", "UI/UX Design"] },
   { group: "Tools", items: ["Mixpanel", "Jira", "Linear", "Confluence", "Figma", "CleverTap", "Claude Code", "Google Anti-Gravity", "Cursor", "SQL"] },
 ]
+
+// Featured talk — NextLeap podcast appearance (unlisted from primary nav)
+export const featuredTalk = {
+  eyebrow: "Featured talk",
+  kicker: "NEXTLEAP · YOUTUBE",
+  title: "From software developer to APM",
+  tag: "Interview · NextLeap Podcast",
+  blurb: "A conversation on the builder-to-PM transition, standing out with cold outreach, and what actually differentiates a product now that anyone can build with AI.",
+  videoId: "Qo676hk8jQU",
+  url: "https://youtu.be/Qo676hk8jQU?si=ICG46TgX_PJtJfBv",
+}
+
+// Idea A — scripted storytelling / QnA chat (pre-defined questions, curated answers).
+// Free-tier: fully client-side, no API. State kept in localStorage so it feels responsive.
+// Questions selected to mirror what a recruiter / founder reading the portfolio would ask,
+// answers grounded in profile.md (canonical).
+export type QAItem = {
+  id: string
+  question: string
+  answer: string
+  tags?: string[]
+}
+
+export const qaScript: QAItem[] = [
+  {
+    id: "impactful",
+    question: "Show me your most impactful project?",
+    tags: ["Projects"],
+    answer:
+      "Two, in different shapes. At Spacekayak–Sanctuary I owned a scam-prevention app end-to-end as APM — from concept to 50K+ downloads and a 4.8★ rating in six months, with 8+ core modules and +68% sprint predictability. The call I made: make a working prototype the default scrum artifact instead of a written PRD (built in Cursor via Claude Code / Anti-Gravity) — idea-to-demo dropped from ~2 weeks to 2–3 days. On the builder side, I shipped DhundoJob solo (PM + design + eng): a cold-outreach tool that turned a 3-hour manual grind into a 5-minute AI workflow — 60+ personalized emails sent, ~80% open rate.",
+  },
+  {
+    id: "ai-workflow",
+    question: "How do you use AI in your product workflow?",
+    tags: ["AI"],
+    answer:
+      "AI's job is to make the first tangible version appear fast so the team aligns on the product, not the document. Concretely: Claude Code / Google Anti-Gravity (in Cursor) for rapid prototyping and spec drafting — a clickable prototype, not a PRD, is how new features get discussed in scrum. Gemini with Search grounding for user/market research synthesis (DhundoJob, competitor analysis). Mixpanel / CleverTap funnel data interpreted by an LLM into testable hypotheses. The through-line is collapsing the distance between an idea and something real.",
+  },
+  {
+    id: "pm-experience",
+    question: "What's your product management experience?",
+    tags: ["Background"],
+    answer:
+      "About 4.2 years of professional experience. I started in mobile engineering — ~2.6 years building Flutter apps across three startups. Over the last ~1.7 years I've moved fully into product: a year as an Internal Product Manager at Settlin (scheduling + bug-tracking, +30% revenue), then 7 months as an APM at Spacekayak owning a consumer scam-safety app. In between I did a deliberate upskilling stretch — NextLeap PM cohort (top fellow out of 300+) and AI prototyping — to transition into product. So I bring builder's empathy from engineering plus focused product ownership.",
+  },
+  {
+    id: "failed-decision",
+    question: "Walk me through a decision that didn't go as planned.",
+    tags: ["Judgment"],
+    answer:
+      "Our scam app needed sensitive permissions (phone / SMS / accessibility) requested up front. That friction plus Play Store policy risk threatened the launch. My pivot: make the permissions optional and request them contextually, once the user sees the value — instead of all-or-nothing at onboarding. Result: far less friction, Play-compliant, launched on time, and onboarding drop-off fell from ~85% to ~67%. Lesson: challenge assumptions fast; adaptability beats rigidity.",
+  },
+  {
+    id: "prioritize",
+    question: "How do you prioritize a roadmap?",
+    tags: ["Framework"],
+    answer:
+      "I balance three lenses: engineering (feasibility, stability, timeline), design (UX and friction), and product/business (goals, value, strategy). A real example: subscription and family (revenue) features needed more validation while competitors were entering. I chose to ship core protection first, gather feedback, validate PMF, then iterate on monetization — so engineering and design moved in parallel without a bottleneck. That's how we shipped 8+ modules in ~6 months on timeline.",
+  },
+  {
+    id: "why-looking",
+    question: "Why are you looking for a new role?",
+    tags: ["Motivation"],
+    answer:
+      "I joined Spacekayak as an APM to build a dedicated client product. When that engagement concluded, the business model was no longer viable, so the entire product and engineering team was wound down — a business decision, not a performance one. I really enjoy building consumer products 0→1, so I'm now looking for a long-term product home where I can keep doing that, ideally in AI PM / APM / Product Builder roles.",
+  },
+  {
+    id: "builder",
+    question: "What do you build as a Product Builder?",
+    tags: ["Builder"],
+    answer:
+      "I treat the build as the proof. DhundoJob is a solo 0→1: Next.js + TypeScript + Tailwind, with Gemini-grounded research, email discovery/verification, and multi-persona AI personalization — shipped on Vercel with no backend (browser-local state + JSON export/import). It's a real, working AI product born from my own job-search pain. I also scaffold fast with v0 and harden with AI tooling. The pattern: spot a real problem, ship the smallest working version, then iterate against live usage.",
+  },
+]
+
+// Contact dialog (opens when "Contact me" is clicked) — reference-style card, minus cal.com.
+// Real handles from profile.md. Channels: LinkedIn / GitHub / X (no Instagram in profile).
+export const contactInfo = {
+  headline: "Let's build something.",
+  blurb: "Best for AI PM, APM and 0→1 product builder roles. Reply within 24h IST.",
+  cards: [
+    { key: "email", label: "Email me", sub: "himanshu.nawalkar@gmail.com", href: "mailto:himanshu.nawalkar@gmail.com" },
+    { key: "whatsapp", label: "WhatsApp", sub: "+91 88508 66281", href: "https://wa.me/918850866281" },
+    { key: "resume", label: "Download resume", sub: "PDF · resume", href: "/Himanshu-Nawalkar-Resume.pdf", download: true },
+  ] as { key: string; label: string; sub: string; href: string; download?: boolean }[],
+  channels: [
+    { label: "LinkedIn", handle: "in/singlesoup", href: "https://linkedin.com/in/singlesoup" },
+    { label: "GitHub", handle: "/singlesoup", href: "https://github.com/singlesoup" },
+    { label: "X", handle: "@singlesouup", href: "https://x.com/singlesouup" },
+  ],
+}
