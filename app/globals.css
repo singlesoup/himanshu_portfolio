@@ -59,7 +59,13 @@ a { color: inherit; text-decoration: none; }
 .availability i { width: .45rem; height: .45rem; background: var(--accent); border-radius: 50%; box-shadow: 0 0 12px var(--accent); }
 
 .hero { position: relative; min-height: 100svh; overflow: hidden; display: flex; padding-top: 4.25rem; }
-.constellation { position: absolute; inset: 0; width: 100%; height: 100%; z-index: 1; cursor: crosshair; touch-action: none; }
+.constellation { position: absolute; inset: 0; width: 100%; height: 100%; z-index: 1; cursor: crosshair; touch-action: pan-y; }
+/* On touch devices the canvas must never trap the scroll gesture — it stays
+   decorative (drag is disabled in JS via coarse-pointer guard). pan-y lets the
+   page scroll vertically everywhere over the hero. */
+@media (pointer: coarse) {
+  .constellation { touch-action: pan-y; pointer-events: none; }
+}
 .hero-grid { position: absolute; inset: 4.25rem 0 0; opacity: .18; pointer-events: none; background-image: linear-gradient(var(--border) 1px, transparent 1px), linear-gradient(90deg,var(--border) 1px,transparent 1px); background-size: 11.111vw 11.111vw; mask-image: linear-gradient(to bottom, black, transparent 86%); }
 .hero-content { position: relative; z-index: 2; width: 100%; display: flex; flex-direction: column; justify-content: space-between; padding: 1.5rem 5vw 2rem; pointer-events: none; }
 .hero-content a { pointer-events: auto; }
@@ -73,6 +79,13 @@ a { color: inherit; text-decoration: none; }
 .hero-lower { display: flex; flex-direction: column; gap: 1.5rem; align-items: flex-start; }
 .hero-lower > p { max-width: 36rem; margin: 0; font-size: clamp(.9rem,1.25vw,1.08rem); color: var(--muted-foreground); }
 .hero-actions { display: flex; flex-wrap: wrap; gap: .65rem; }
+/* Bigger touch/scroll-start target around the hero buttons on touch devices,
+   so users can grab the page to scroll even when starting on the button row. */
+@media (pointer: coarse) {
+  .hero-actions { padding: 1.25rem 0 2.75rem; margin: 0 -0.5rem; }
+  .hero-actions a { min-height: 48px; display: inline-flex; align-items: center; }
+  .hero-lower > p { padding-bottom: 1rem; }
+}
 .button-primary,.button-ghost { min-height: 2.8rem; padding: 0 1rem; display: inline-flex; align-items: center; gap: .65rem; border: 1px solid var(--border); border-radius: 99px; font: 600 .72rem var(--font-space); text-transform: uppercase; letter-spacing: .06em; }
 .button-primary { background: var(--primary); color: var(--primary-foreground); border-color: var(--primary); }
 .button-primary:hover { background: var(--secondary); }

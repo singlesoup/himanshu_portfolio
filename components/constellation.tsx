@@ -139,6 +139,10 @@ export function Constellation() {
       }
     }
     const onPointerDown = (event: PointerEvent) => {
+      // On touch/coarse pointers, never start a drag — let the browser scroll.
+      // (CSS also sets pointer-events:none + touch-action:pan-y on coarse devices,
+      // so this is a belt-and-braces guard against the canvas trapping the gesture.)
+      if (window.matchMedia("(pointer: coarse)").matches) return
       const rect = canvas.getBoundingClientRect()
       const lx = event.clientX - rect.left
       const ly = event.clientY - rect.top
