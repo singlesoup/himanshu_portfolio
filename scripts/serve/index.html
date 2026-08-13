@@ -1,0 +1,40 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8" />
+<style>
+  html,body{margin:0;height:100%;background:#0d0d0f;overflow:hidden;font-family:sans-serif}
+  .label{position:fixed;top:20px;left:20px;color:#aaa;font-size:14px}
+  #dragonite{
+    position:fixed;top:0;left:0;z-index:9999;pointer-events:none;
+    background-repeat:no-repeat;background-size:200% 100%;background-position:0% 0%;
+    image-rendering:pixelated;will-change:transform;
+    background-image:url('/dragonite-sheet.png');
+  }
+</style>
+</head>
+<body>
+<div class="label">Dragonite follower harness — cursor at target marker</div>
+<div id="dragonite"></div>
+<script>
+const size=48, ease=0.12, trail=18, half=size/2;
+const el=document.getElementById('dragonite');
+el.style.width=size+'px';el.style.height=size+'px';
+let x=innerWidth/2,y=innerHeight/2,targetX=x,targetY=y,facing=1,frame=0,acc=0,last=performance.now();
+addEventListener('mousemove',e=>{targetX=e.clientX;targetY=e.clientY},{passive:true});
+function tick(now){
+  const dt=Math.min(now-last,48);last=now;
+  const dx=targetX-x,dy=targetY-y,dist=Math.hypot(dx,dy);
+  const t=1-Math.pow(1-ease,dt/16.67);x+=dx*t;y+=dy*t;
+  if(dx>6)facing=1;else if(dx<-6)facing=-1;
+  const fi=dist>4?90:320;acc+=dt;if(acc>=fi){frame=frame?0:1;acc=0;}
+  const bob=Math.sin(now/300)*2;
+  let px=x,py=y;if(dist>0.001){px-=dx/dist*trail;py-=dy/dist*trail;}
+  el.style.transform=`translate3d(${px-half}px, ${py-half+bob}px, 0) scaleX(${facing})`;
+  el.style.backgroundPositionX=frame?'100%':'0%';
+  requestAnimationFrame(tick);
+}
+requestAnimationFrame(tick);
+</script>
+</body>
+</html>

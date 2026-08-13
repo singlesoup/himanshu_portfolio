@@ -11,6 +11,7 @@ import { CaseCard } from "@/components/case-card"
 import { FeaturedTalk } from "@/components/featured-talk"
 import { QAChat } from "@/components/qa-chat"
 import { ContactDialog } from "@/components/contact-dialog"
+import DragoniteFollower from "@/components/DragoniteFollower"
 import { navigation, principles, projects, caseStudies, skillGroups, socials, experience } from "@/lib/content"
 
 export default function Home() {
@@ -44,6 +45,8 @@ export default function Home() {
   ]
   return (
     <main>
+      <DragoniteFollower />
+
       <header className="site-header">
         <a className="brand" href="#top" aria-label="Himanshu Nawalkar, back to top"><Asterisk size={18} aria-hidden="true" /><span>HN / 26</span></a>
         <nav aria-label="Primary navigation">

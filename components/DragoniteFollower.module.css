@@ -1,0 +1,39 @@
+.dragonite {
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 9999;
+  pointer-events: none;
+  /* 2-frame sheet: left frame (wings up) + right frame (wings down) */
+  background-repeat: no-repeat;
+  background-size: 200% 100%;
+  background-position: 0% 0%;
+  /* keep the pixel-art crisp at any scale */
+  image-rendering: pixelated;
+  image-rendering: -moz-crisp-edges;
+  image-rendering: crisp-edges;
+  will-change: transform;
+}
+
+/* Idle: cursor still for a few seconds → settle and doze off. The wing flap keeps
+   running via JS (frame swap); we add a sleepy "z" and a calm tint. Purely CSS,
+   no extra sprite frames needed. */
+.idle {
+  filter: saturate(0.92) brightness(1.02);
+}
+.idle::after {
+  content: "z";
+  position: absolute;
+  left: 70%;
+  top: -6px;
+  font: 700 14px/1 var(--font-space, monospace);
+  color: var(--muted-foreground, #9aa);
+  opacity: 0;
+  pointer-events: none;
+  animation: dragoniteZ 2.8s ease-in-out infinite;
+}
+@keyframes dragoniteZ {
+  0%   { opacity: 0; transform: translate(0, 4px) scale(0.6); }
+  35%  { opacity: 0.85; }
+  100% { opacity: 0; transform: translate(10px, -18px) scale(1.15); }
+}
