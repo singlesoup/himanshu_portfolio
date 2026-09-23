@@ -32,6 +32,8 @@ export function QAChat() {
   const [asked, setAsked] = useState<string[]>([])
   const [typed, setTyped] = useState("") // revealed portion of the latest bot answer
   const [streaming, setStreaming] = useState(false)
+  const featuredId = qaScript.find((i) => i.featured)?.id ?? ""
+  const featuredClicked = featuredId ? asked.includes(featuredId) : true
   const threadRef = useRef<HTMLDivElement>(null)
   const timerRef = useRef<ReturnType<typeof setInterval> | null>(null)
 
@@ -53,10 +55,11 @@ export function QAChat() {
     threadRef.current?.scrollTo({ top: threadRef.current.scrollHeight, behavior: "smooth" })
   }, [messages, typed])
 
-  function streamAnswer(full: string) {
+  function streamAnswer(full: string, onDone?: () => void) {
     if (typeof window !== "undefined" && window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
       setTyped(full)
       setStreaming(false)
+      onDone?.()
       return
     }
     if (timerRef.current) clearInterval(timerRef.current)
@@ -70,6 +73,7 @@ export function QAChat() {
         if (timerRef.current) clearInterval(timerRef.current)
         timerRef.current = null
         setStreaming(false)
+        onDone?.()
       }
     }, STREAM_MS)
   }
@@ -85,7 +89,12 @@ export function QAChat() {
       try { localStorage.setItem(STORAGE_KEY, JSON.stringify(next)) } catch {}
     }
     setInput("")
-    streamAnswer(answer)
+    const isFeatured = item?.featured === true
+    streamAnswer(answer, () => {
+      if (isFeatured && typeof window !== "undefined") {
+        window.dispatchEvent(new CustomEvent("dragonite:hop"))
+      }
+    })
   }
 
   function onSubmit(e: React.FormEvent) {
@@ -100,6 +109,9 @@ export function QAChat() {
   return (
     <section className="section qa-section" id="ask" aria-labelledby="qa-title">
       <SectionHeading index="" title="Ask me anything" note="Pre-loaded answers to the questions founders and hiring managers actually ask. Pick one, or type your own." />
+      {!featuredClicked && (
+        <p className="qa-hint">Try the highlighted pill — watch the dragon react. 👇</p>
+      )}
       <div className="qa-window" role="region" aria-label="Ask Himanshu — scripted Q&A">
         <div className="qa-titlebar">
           <span className="qa-dots" aria-hidden="true"><i /><i /><i /></span>
@@ -126,7 +138,7 @@ export function QAChat() {
             <button
               key={item.id}
               type="button"
-              className={`qa-pill ${asked.includes(item.id) ? "is-asked" : ""}`}
+              className={`qa-pill ${item.featured ? "is-featured" : ""} ${asked.includes(item.id) ? "is-asked" : ""}`}
               onClick={() => ask(item, item.question)}
             >
               {item.question}{asked.includes(item.id) ? " ✓" : ""}

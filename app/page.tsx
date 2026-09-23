@@ -1,7 +1,7 @@
 "use client"
 
 import { Fragment, useEffect, useState } from "react"
-import { ArrowDown, ArrowRight, ArrowUpRight, Asterisk, Download, X } from "lucide-react"
+import { ArrowDown, ArrowRight, ArrowUpRight, Download, X } from "lucide-react"
 import { Constellation } from "@/components/constellation"
 import { ProjectCard } from "@/components/project-card"
 import { Reveal } from "@/components/reveal"
@@ -12,7 +12,9 @@ import { FeaturedTalk } from "@/components/featured-talk"
 import { QAChat } from "@/components/qa-chat"
 import { ContactDialog } from "@/components/contact-dialog"
 import DragoniteFollower from "@/components/DragoniteFollower"
-import { navigation, principles, projects, caseStudies, skillGroups, socials, experience } from "@/lib/content"
+import { SiteHeader } from "@/components/site-header"
+import { principles, selectedWork, caseStudies, skillGroups, socials, experience } from "@/lib/content"
+import { PdfView } from "@/components/pdf-view"
 
 export default function Home() {
   const [activeModal, setActiveModal] = useState<string | null>(null)
@@ -47,13 +49,7 @@ export default function Home() {
     <main>
       <DragoniteFollower />
 
-      <header className="site-header">
-        <a className="brand" href="#top" aria-label="Himanshu Nawalkar, back to top"><Asterisk size={18} aria-hidden="true" /><span>HN / 26</span></a>
-        <nav aria-label="Primary navigation">
-          {navigation.map((item) => <a key={item.href} href={item.href}><sup>{item.index}</sup>{item.label}</a>)}
-        </nav>
-        <a className="availability" href="mailto:himanshu.nawalkar@gmail.com"><i aria-hidden="true" />Available for roles</a>
-      </header>
+      <SiteHeader />
 
       <section className="hero" id="top" aria-labelledby="hero-title">
         <Constellation />
@@ -125,11 +121,12 @@ export default function Home() {
 
       <section className="section work-section" id="work">
         <SectionHeading index="04" title="Selected work" note="Products shipped, systems improved, and studies that sharpened the product sense behind the build." />
-        <Reveal className="project-grid">{projects.map((project, index) => <ProjectCard key={project.id} project={project} index={index} />)}</Reveal>
+        <Reveal className="project-grid">{selectedWork.map((project, index) => <ProjectCard key={project.id} project={project} index={index} />)}</Reveal>
+        <a className="projects-index-link" href="/projects">All projects<ArrowRight size={14} aria-hidden="true" /></a>
       </section>
 
       <section className="section" id="skills">
-        <SectionHeading index="05" title="Skills" note="A practical toolkit for moving between users, strategy, prototype and delivery." />
+        <SectionHeading index="06" title="Skills" note="A practical toolkit for moving between users, strategy, prototype and delivery." />
         <Reveal className="skills-grid">{skillGroups.map((group, index) => <article key={group.group}><span className="skill-number">0{index + 1}</span><h3>{group.group}</h3><div>{group.items.map((skill) => <span key={skill}>{skill}</span>)}</div></article>)}</Reveal>
       </section>
 
@@ -138,7 +135,7 @@ export default function Home() {
       <section className="contact" id="contact">
         <div className="moon-wrap" aria-hidden="true"><div className="orbit orbit-one" /><div className="orbit orbit-two" /><div className="moon"><span /></div></div>
         <div className="contact-content">
-          <SectionHeading index="06" title="Contact" />
+          <SectionHeading index="07" title="Contact" />
           <Reveal>
             <p className="contact-kicker">Have a hard problem, an early idea, or a role where building matters?</p>
             <h2>Let&apos;s build the next thing—<em>to the moon.</em></h2>
@@ -160,7 +157,7 @@ export default function Home() {
             </div>
             <h2 className="modal-title">{activeStudy.title}</h2>
             <p className="modal-blurb">{activeStudy.blurb}</p>
-            <iframe className="modal-frame" src={activeStudy.href} title={activeStudy.title} loading="lazy" />
+            <PdfView src={activeStudy.href} label={activeStudy.title} />
             <a className="modal-open" href={activeStudy.href} target="_blank" rel="noreferrer">Open in new tab<ArrowUpRight size={14} aria-hidden="true" /></a>
           </div>
         </div>
@@ -178,7 +175,7 @@ export default function Home() {
             </div>
             <h2 className="modal-title">Resume</h2>
             <p className="modal-blurb">Associate / Technical Product Manager — full work history, skills and highlights.</p>
-            <iframe className="modal-frame" src="/Himanshu-Nawalkar-Resume.pdf" title="Himanshu Nawalkar resume" loading="lazy" />
+            <PdfView src="/Himanshu-Nawalkar-Resume.pdf" label="Himanshu Nawalkar resume" />
             <a className="modal-open" href="/Himanshu-Nawalkar-Resume.pdf" target="_blank" rel="noreferrer">Open in new tab<ArrowUpRight size={14} aria-hidden="true" /></a>
           </div>
         </div>

@@ -14,6 +14,15 @@ export type Project = {
   impact: string
   metric: string
   metricLabel: string
+  /** YYYY-MM of the first public version. /projects sorts newest first. */
+  shipped: string
+  highlight: string
+  problem: string
+  built: string
+  highlights: string[]
+  stack: string[]
+  /** Product skills shown beside the tech pills on /projects. */
+  skills?: string[]
   links: ProjectLink[]
   featured?: boolean
 }
@@ -28,12 +37,13 @@ export type ExperienceItem = {
 }
 
 export const navigation = [
-  { index: "01", label: "About", href: "#about" },
-  { index: "02", label: "Work", href: "#work-experience" },
-  { index: "03", label: "Case Studies", href: "#case-studies" },
-  { index: "04", label: "Projects", href: "#work" },
-  { index: "05", label: "Skills", href: "#skills" },
-  { index: "06", label: "Contact", href: "#contact" },
+  { index: "01", label: "About", href: "/#about" },
+  { index: "02", label: "Work", href: "/#work-experience" },
+  { index: "03", label: "Case Studies", href: "/#case-studies" },
+  { index: "04", label: "Selected Work", href: "/#work" },
+  { index: "05", label: "Projects", href: "/projects" },
+  { index: "06", label: "Skills", href: "/#skills" },
+  { index: "07", label: "Contact", href: "/#contact" },
 ]
 
 export const socials = [
@@ -76,14 +86,209 @@ export const experience: ExperienceItem[] = [
     ] },
 ]
 
-export const projects: Project[] = [
-  { id: "siren", title: "Siren", type: "Consumer safety · 0→1", status: "Shipped", tagline: "A scam-prevention app built from concept to trust at scale.", impact: "Mapped risk-led use cases into 8+ core modules and shipped the first version in six months.", metric: "50K+", metricLabel: "downloads · 4.8★ rating", links: [{ label: "Play Store", href: "https://play.google.com/store/apps/details?id=com.joinsiren.app" }], featured: true },
-  { id: "dhundojob", title: "DhundoJob", type: "AI outreach · Solo build", status: "In progress", tagline: "A personal job-search pain point, turned into a working AI product.", impact: "Reduced research, discovery and personalized cold outreach from a three-hour grind to a five-minute flow, with the product continuing to evolve.", metric: "3 hr → 5 min", metricLabel: "60+ emails · ~80% opened", links: [{ label: "Live", href: "https://dhundojob.vercel.app/" }, { label: "GitHub", href: "https://github.com/singlesoup" }], featured: true },
-  { id: "settlin", title: "Settlin Ops", type: "Internal product · Mobile", status: "Shipped", tagline: "Scheduling and session-linked bug reporting for property operations.", impact: "Built roadmaps around operational friction to improve appointments, resolution speed and team throughput.", metric: "+75%", metricLabel: "team efficiency", links: [{ label: "Play Store", href: "https://play.google.com/store/apps/details?id=in.settlin.liaison" }] },
-  { id: "nextleap", title: "Product Studies", type: "NextLeap Fellowship", status: "Shipped", tagline: "Spotify, Flipkart, Cres Finance and YouTube Hype.", impact: "A compact body of product sense, strategy, PRD and creator-growth work recognized among 300+ fellows.", metric: "Top / 300+", metricLabel: "Product Fellow · Top PRD", links: [{ label: "Portfolio", href: "https://nextleap.app/portfolio/himanshu-nawalkar" }] },
-  { id: "oftna", title: "OFTNA", type: "Behavior design · Experimental web", status: "In progress", tagline: "A dopamine dummy for the urge to order food online.", impact: "Built to give users the satisfaction loop of browsing and ordering food at zero cost—without placing a real order.", metric: "₹0", metricLabel: "cost per dopamine order", links: [{ label: "Live", href: "https://otfna.vercel.app/" }] },
-  { id: "orangelist", title: "Orangelist", type: "Productivity · Flutter", status: "Shipped", tagline: "A playful, focused to-do experience built for getting things done.", impact: "Designed and built as a cross-platform Flutter product, turning everyday task planning into a lightweight, accessible workflow.", metric: "Live", metricLabel: "web demo available", links: [{ label: "Live demo", href: "https://orangelist.codemagic.app/" }, { label: "GitHub", href: "https://github.com/singlesoup/orangelist" }] },
+export const selectedWork: Project[] = [
+  {
+    id: "siren",
+    title: "Siren",
+    type: "Consumer safety · 0→1",
+    status: "Shipped",
+    shipped: "2026-04",
+    tagline: "A scam-prevention app built from concept to trust at scale.",
+    impact: "Mapped risk-led use cases into 8+ core modules and shipped the first version in six months.",
+    metric: "50K+",
+    metricLabel: "downloads · 4.8★ rating",
+    highlight: "50K+ downloads · 4.8★",
+    problem: "A scam lands in a specific moment — a call, a text, a payment. Ask for every sensitive permission before someone has felt the value, and most of them leave.",
+    built: "Owned the consumer app end to end as APM. Risk-led use cases became 8+ core modules, a working prototype replaced the written PRD in scrum, and the first version shipped in six months.",
+    highlights: [
+      "50,000+ downloads and a 4.8★ Play Store rating in the first 6 months",
+      "Sprint predictability up 68% from a data- and risk-backed roadmap",
+      "Idea-to-demo cut from about 2 weeks to 2–3 days",
+      "Permissions made optional and contextual — onboarding drop-off from ~85% to ~67%",
+    ],
+    stack: ["Claude Code", "Cursor", "Anti-Gravity"],
+    links: [{ label: "Play Store", href: "https://play.google.com/store/apps/details?id=com.joinsiren.app" }],
+  },
+  {
+    id: "settlin",
+    title: "Settlin Ops",
+    type: "Internal product · Mobile",
+    status: "Shipped",
+    shipped: "2023-04",
+    tagline: "Scheduling and session-linked bug reporting for property operations.",
+    impact: "Built roadmaps around operational friction to improve appointments, resolution speed and team throughput.",
+    metric: "+75%",
+    metricLabel: "team efficiency",
+    highlight: "+75% team efficiency",
+    problem: "On-site property teams were missing appointments, and bugs found in the field were not tied back to the session that caused them.",
+    built: "A scheduling roadmap and partner-app MVP, then a bug-reporting flow linked to the app session, so ops could see what actually happened on site.",
+    highlights: [
+      "Missed appointments down 30%, revenue up 30%",
+      "Resolution speed up 50%, team efficiency up 75%",
+      "Feature delivery up 40%, with Figma wireframes for 5+ improvements",
+    ],
+    stack: ["Flutter", "Figma"],
+    links: [{ label: "Play Store", href: "https://play.google.com/store/apps/details?id=in.settlin.liaison" }],
+  },
+  {
+    id: "nextleap",
+    title: "Product Studies",
+    type: "NextLeap Fellowship",
+    status: "Shipped",
+    shipped: "2025-09",
+    tagline: "Spotify, Flipkart, Cres Finance and YouTube Hype.",
+    impact: "A compact body of product sense, strategy, PRD and creator-growth work recognized among 300+ fellows.",
+    metric: "Top / 300+",
+    metricLabel: "Product Fellow · Top PRD",
+    highlight: "Top PRD of 300+",
+    problem: "Product judgment stays theoretical until you have to write the PRD, size a market, or tear down a product people already use.",
+    built: "A fellowship set — Spotify, Flipkart, Cres Finance, YouTube Hype, plus teardowns and strategy — recognized among 300+ fellows, including a top PRD.",
+    highlights: [
+      "YouTube Hype PRD ranked top of 300+ fellows",
+      "Strategy on whether Flipkart should enter two-wheelers",
+      "Teardowns of JioHotstar and CRED’s referral loop",
+    ],
+    stack: ["PRD", "Strategy", "Teardown"],
+    links: [{ label: "Portfolio", href: "https://nextleap.app/portfolio/himanshu-nawalkar" }],
+  },
 ]
+
+export const projects: Project[] = [
+  {
+    id: "ganesha",
+    title: "Ganesha Tracker",
+    type: "Community map · Bengaluru",
+    status: "Shipped",
+    shipped: "2026-09-14",
+    tagline: "A map of Ganesh Chaturthi pandals across Bengaluru.",
+    impact: "Turned scattered Instagram and Reddit tips into one map people can search, share, and add to.",
+    metric: "34",
+    metricLabel: "pandals on the map",
+    highlight: "34 pandals on the map",
+    problem: "During Ganesh Chaturthi, Bengaluru fills with pandals and there is no single place to find them. People ask on Instagram and Reddit and get a name, with no address, timing, or photo.",
+    built: "A map-first site for Ganesh Chaturthi 2026. Pandals are plotted across the city, with photos, neighbourhood search, WhatsApp share, and a form to add one while you are out.",
+    highlights: [
+      "34 pandals listed, with 137 community favourites",
+      "4,622 page views during the festival",
+      "Filter by community, temple, or apartment, and search by neighbourhood",
+    ],
+    stack: ["React", "Leaflet", "FastAPI", "MongoDB"],
+    skills: ["Product Discovery", "User Stories"],
+    links: [{ label: "Live", href: "https://ganeshatracker.vercel.app/" }],
+  },
+  {
+    id: "getmehome",
+    title: "Get Me Home",
+    type: "Pay-to-rank · Fiction",
+    status: "Shipped",
+    shipped: "2026-09-04",
+    tagline: "A pay-to-rank board that moves Commander Sam closer to Earth.",
+    impact: "Every paid listing is a spot on the board and fuel for the ship.",
+    metric: "$10k",
+    metricLabel: "to bring the ship home",
+    highlight: "$1 to list · $10k to land",
+    problem: "Creators want to be seen, and buying the same attention with ads is expensive. A bare leaderboard gives no one a reason to look.",
+    built: "A pay-to-rank board with Commander Sam’s rescue as the skin. Paste a link, take a spot, and every listing adds fuel that moves his ship toward Earth. A payment buys a ranked listing. The rescue is fiction.",
+    highlights: [
+      "$1 lists a URL. Pay $1 over the seat above to overtake it",
+      "The ship on the first fold moves as the board fills, toward a $10,000 landing",
+      "Live at getmehome.lol, with hosted checkout and a public board",
+    ],
+    stack: ["React", "Supabase", "Dodo"],
+    skills: ["Feature Prioritization", "UI/UX Design"],
+    links: [{ label: "Live", href: "https://getmehome.lol/" }],
+  },
+  {
+    id: "dhundojob",
+    title: "DhundoJob",
+    type: "AI outreach · Solo build",
+    status: "In progress",
+    shipped: "2026-08",
+    tagline: "A personal job-search pain point, turned into a working AI product.",
+    impact: "Reduced research, discovery and personalized cold outreach from a three-hour grind to a five-minute flow, with the product continuing to evolve.",
+    metric: "3 hr → 5 min",
+    metricLabel: "60+ emails · ~80% opened",
+    highlight: "3 hours to 5 minutes",
+    problem: "Researching a company, finding the right person, and writing a cold email that sounds like you was a three-hour grind. Every time.",
+    built: "A solo product — PM, design, and engineering — that does the research, the discovery, and the personalization, then leaves a five-minute flow. It runs in the browser: Gemini-grounded research, email discovery, and multi-persona drafts, with local state and JSON export. No backend.",
+    highlights: [
+      "60+ personalized emails sent, about 80% opened",
+      "Research, discovery, and outreach collapsed from 3 hours to 5 minutes",
+      "Still evolving against live use",
+    ],
+    stack: ["Next.js", "TypeScript", "Tailwind", "Gemini", "Vercel"],
+    skills: ["Product Discovery", "AI Product Strategy"],
+    links: [{ label: "Live", href: "https://dhundojob.vercel.app/" }, { label: "GitHub", href: "https://github.com/singlesoup" }],
+  },
+  {
+    id: "otfna",
+    title: "OTFNA",
+    type: "Demo food order · India",
+    status: "Shipped",
+    shipped: "2026-06",
+    tagline: "Only The Food Never Arrives — the ordering ritual, with the bill left unspent.",
+    impact: "Browse, cart, checkout, and fake tracking, with no payment, kitchen, or rider.",
+    metric: "₹0",
+    metricLabel: "spent on a demo order",
+    highlight: "The ritual, none of the bill",
+    problem: "Late-night hunger still triggers the urge to order food online. The taps that close that loop — browse, cart, checkout — used to end in a real charge.",
+    built: "OTFNA (Only The Food Never Arrives) is a phone-first demo of that loop. Ten fictional restaurants, cuisine filters, a cart, checkout, and fake tracking. No signup, no payment, no rider. History keeps rupees not spent, streaks, and badges on this device.",
+    highlights: [
+      "10 demo restaurants, with search, cuisine filters, and sort",
+      "14 home-cook recipes, plus a history of demo orders and money not spent",
+      "No account. Orders, streaks, and badges stay in local storage",
+    ],
+    stack: ["Next.js", "Tailwind", "PWA"],
+    skills: ["Product Discovery", "UI/UX Design"],
+    links: [{ label: "Live", href: "https://otfna.vercel.app/" }],
+  },
+  {
+    id: "getinflow",
+    title: "Get in Flow",
+    type: "Focus · Pomodoro",
+    status: "Shipped",
+    shipped: "2026-05-30",
+    tagline: "A Pomodoro, a task list, and ambient sound on one screen.",
+    impact: "Focus time is logged against the task you actually picked, not a timer floating on its own.",
+    metric: "25 min",
+    metricLabel: "focus, tied to a task",
+    highlight: "Focus time, tied to a task",
+    problem: "The timer, the to-do list, and the noise all live in different apps. You finish a session and still cannot say where the time went.",
+    built: "One screen: a 25-minute Pomodoro, the task you are working on, and an ambient soundscape. Completed sessions log against that task. Everything stays in the browser, with JSON export.",
+    highlights: [
+      "Focus and break timer, with time recorded on the task you picked",
+      "Rain, forest, ocean, and white noise",
+      "Tasks and session history survive a reload and export as JSON",
+    ],
+    stack: ["Next.js", "Tailwind", "Web Audio"],
+    skills: ["Feature Prioritization", "UI/UX Design"],
+    links: [{ label: "Live", href: "https://getinflow.vercel.app/" }, { label: "GitHub", href: "https://github.com/singlesoup/getinflow" }],
+  },
+  {
+    id: "orangelist",
+    title: "Orangelist",
+    type: "Productivity · Flutter",
+    status: "Shipped",
+    shipped: "2022-10-12",
+    tagline: "A playful, focused to-do experience built for getting things done.",
+    impact: "Designed and built as a cross-platform Flutter product, turning everyday task planning into a lightweight, accessible workflow.",
+    metric: "Live",
+    metricLabel: "web demo available",
+    highlight: "Live web demo",
+    problem: "Most to-do apps are either too heavy to open or too plain to want to.",
+    built: "A small cross-platform to-do product in Flutter — playful enough to open, light enough to finish the list.",
+    highlights: [
+      "Shipped as a Flutter app with a live web demo",
+      "Open source, built for everyday task planning",
+    ],
+    stack: ["Flutter"],
+    skills: ["UI/UX Design", "User Stories"],
+    links: [{ label: "Live demo", href: "https://orangelist.codemagic.app/" }, { label: "GitHub", href: "https://github.com/singlesoup/orangelist" }],
+  },
+]
+
+/** Newest public version first. Selected work on the homepage is a separate list. */
+export const projectsByShipDate = [...projects].sort((a, b) => b.shipped.localeCompare(a.shipped))
 
 export type CaseStudy = {
   id: string
@@ -145,6 +350,7 @@ export type QAItem = {
   question: string
   answer: string
   tags?: string[]
+  featured?: boolean // highlighted "try me" pill that also makes the dragon hop when answered
 }
 
 export const qaScript: QAItem[] = [
@@ -196,6 +402,14 @@ export const qaScript: QAItem[] = [
     tags: ["Builder"],
     answer:
       "I treat the build as the proof. DhundoJob is a solo 0→1: Next.js + TypeScript + Tailwind, with Gemini-grounded research, email discovery/verification, and multi-persona AI personalization — shipped on Vercel with no backend (browser-local state + JSON export/import). It's a real, working AI product born from my own job-search pain. I also scaffold fast with v0 and harden with AI tooling. The pattern: spot a real problem, ship the smallest working version, then iterate against live usage.",
+  },
+  {
+    id: "outside-work",
+    question: "What do you do outside of work?",
+    tags: ["Human", "Offwork"],
+    featured: true,
+    answer:
+      "Outside of work I like to play and watch Football. I sometime pick my guitar jam to my favourite songs. I read non-fiction often and play table tennis. I also own my sweet R15V4 so sometimes I also like to go on bike rides.",
   },
 ]
 

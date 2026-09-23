@@ -3,6 +3,7 @@
 import { useState } from "react"
 import { ArrowUpRight } from "lucide-react"
 import type { CaseStudy } from "@/lib/content"
+import { PdfView } from "@/components/pdf-view"
 
 export function CaseCard({ study, index, total, onOpen }: { study: CaseStudy; index: number; total: number; onOpen: () => void }) {
   const [hover, setHover] = useState(false)
@@ -26,7 +27,7 @@ export function CaseCard({ study, index, total, onOpen }: { study: CaseStudy; in
       {hover && (
         <div className="case-preview" aria-hidden="true">
           {isPdf ? (
-            <iframe className="case-preview-frame" src={`${study.href}#view=FitH&page=1&toolbar=0&navpanes=0`} loading="lazy" title={`${study.title} preview`} />
+            <PdfView src={study.href} pages={1} label={`${study.title} preview`} />
           ) : (
             <div className="case-preview-doc"><span>Opens in a new tab</span></div>
           )}
