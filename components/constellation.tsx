@@ -54,6 +54,26 @@ export function Constellation() {
       }))
     }
 
+    // Constellation colors are token-driven so they re-theme in light mode.
+    // Cached and refreshed on resize + when <html data-theme> changes.
+    const readColors = () => {
+      const cs = getComputedStyle(document.documentElement)
+      return {
+        line: cs.getPropertyValue("--c-line").trim() || "194,204,122",
+        star: cs.getPropertyValue("--c-star").trim() || "237,239,230",
+        glow: cs.getPropertyValue("--c-glow").trim() || "rgba(194,204,122,.22)",
+        glowDrag: cs.getPropertyValue("--c-glow-drag").trim() || "rgba(194,204,122,.34)",
+        glowHover: cs.getPropertyValue("--c-glow-hover").trim() || "rgba(194,204,122,.28)",
+        ring: cs.getPropertyValue("--c-ring").trim() || "rgba(194,204,122,.6)",
+        ringDrag: cs.getPropertyValue("--c-ring-drag").trim() || "rgba(194,204,122,.95)",
+        core: cs.getPropertyValue("--c-core").trim() || "#e7ecbe",
+        label: cs.getPropertyValue("--c-label").trim() || "rgba(231,236,190,.8)",
+      }
+    }
+    let colors = readColors()
+    const themeObserver = new MutationObserver(() => { colors = readColors() })
+    themeObserver.observe(document.documentElement, { attributes: true, attributeFilter: ["data-theme"] })
+
     const np = (p: ProjectStar) => ({ x: p.x * width, y: p.y * height })
 
     const draw = () => {
@@ -71,11 +91,11 @@ export function Constellation() {
           const next = ambient[j]
           const distance = Math.hypot(star.x - next.x, star.y - next.y)
           if (distance < 92) {
-            ctx.strokeStyle = `rgba(194, 204, 122, ${0.07 * (1 - distance / 92)})`
+            ctx.strokeStyle = `rgba(${colors.line}, ${(0.07 * (1 - distance / 92)).toFixed(3)})`
             ctx.beginPath(); ctx.moveTo(star.x + offsetX, star.y + offsetY); ctx.lineTo(next.x + offsetX, next.y + offsetY); ctx.stroke()
           }
         }
-        ctx.fillStyle = `rgba(237, 239, 230, ${star.alpha})`
+        ctx.fillStyle = `rgba(${colors.star}, ${star.alpha})`
         ctx.beginPath(); ctx.arc(star.x + offsetX, star.y + offsetY, star.size, 0, Math.PI * 2); ctx.fill()
       }
       const isMobile = window.innerWidth < 700
@@ -88,17 +108,17 @@ export function Constellation() {
         const base = isDrag ? 20 : isHover ? 18 : 16
         const r = base + (isHover || isDrag ? 0 : pulse)
         // glow halo
-        ctx.fillStyle = isDrag ? "rgba(194, 204, 122, .34)" : isHover ? "rgba(194, 204, 122, .28)" : "rgba(194, 204, 122, .2)"
+        ctx.fillStyle = isDrag ? colors.glowDrag : isHover ? colors.glowHover : colors.glow
         ctx.beginPath(); ctx.arc(x, y, r, 0, Math.PI * 2); ctx.fill()
         // grab ring
-        ctx.strokeStyle = isDrag ? "rgba(194, 204, 122, .95)" : "rgba(194, 204, 122, .6)"
+        ctx.strokeStyle = isDrag ? colors.ringDrag : colors.ring
         ctx.lineWidth = isHover || isDrag ? 2 : 1.25
         ctx.beginPath(); ctx.arc(x, y, r, 0, Math.PI * 2); ctx.stroke()
         // solid center dot
-        ctx.fillStyle = "#E7ECBE"; ctx.beginPath(); ctx.arc(x, y, 3.5, 0, Math.PI * 2); ctx.fill()
+        ctx.fillStyle = colors.core; ctx.beginPath(); ctx.arc(x, y, 3.5, 0, Math.PI * 2); ctx.fill()
         if (!isMobile) {
           ctx.font = "600 10px Inter, sans-serif"; ctx.letterSpacing = "1px"
-          ctx.fillStyle = isHover || isDrag ? "#E7ECBE" : "rgba(231, 236, 190, .8)"
+          ctx.fillStyle = isHover || isDrag ? colors.core : colors.label
           ctx.fillText(project.label, x + 14, y + 4)
         }
       })
@@ -187,6 +207,7 @@ export function Constellation() {
     canvas.addEventListener("pointerleave", onPointerLeave)
     return () => {
       cancelAnimationFrame(frame)
+      themeObserver.disconnect()
       window.removeEventListener("resize", resize)
       canvas.removeEventListener("pointermove", onPointerMove)
       canvas.removeEventListener("pointerdown", onPointerDown)

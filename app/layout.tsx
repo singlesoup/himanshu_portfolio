@@ -21,7 +21,6 @@ export const metadata: Metadata = {
 }
 
 export const viewport: Viewport = {
-  colorScheme: "dark",
   themeColor: "#0C0E09",
   width: "device-width",
   initialScale: 1,
@@ -30,12 +29,21 @@ export const viewport: Viewport = {
 
 export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
   return (
-    <html lang="en" className={`bg-background ${inter.variable} ${spaceGrotesk.variable}`}>
+    <html lang="en" className={`bg-background ${inter.variable} ${spaceGrotesk.variable}`} suppressHydrationWarning>
+      <head>
+        {/* No-FOUC: apply saved theme before first paint */}
+        <script
+          dangerouslySetInnerHTML={{
+            __html:
+              "(function(){try{var t=localStorage.getItem('hn-theme');var m=document.querySelector('meta[name=\"theme-color\"]');if(t==='light'){document.documentElement.setAttribute('data-theme','light');if(m)m.setAttribute('content','#f6f5ef');}}catch(e){}})();",
+          }}
+        />
+      </head>
       <body className="font-sans antialiased">
         <CursorGlow />
         {children}
         <Analytics />
       </body>
     </html>
-  )
+  );
 }

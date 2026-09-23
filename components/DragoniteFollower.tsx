@@ -82,9 +82,10 @@ export default function DragoniteFollower({
     // Click reaction: a quick happy hop, composed into the JS transform so it
     // doesn't fight the per-frame follow transform (CSS transform animations would).
     let hopStart = -1;
-    const onDown = () => {
-      hopStart = performance.now();
-    };
+    const triggerHop = () => { hopStart = performance.now(); };
+    const onDown = () => { triggerHop(); };
+    // External trigger (e.g. QnA "Outside of work" answer finished streaming).
+    const onHopEvent = () => { triggerHop(); };
 
     const onMove = (e: MouseEvent) => {
       targetX = e.clientX;
@@ -93,6 +94,7 @@ export default function DragoniteFollower({
     };
     window.addEventListener("mousemove", onMove, { passive: true });
     window.addEventListener("mousedown", onDown, { passive: true });
+    window.addEventListener("dragonite:hop", onHopEvent as EventListener);
     wake();
 
     const tick = (now: number) => {
@@ -150,6 +152,7 @@ export default function DragoniteFollower({
     return () => {
       window.removeEventListener("mousemove", onMove);
       window.removeEventListener("mousedown", onDown);
+      window.removeEventListener("dragonite:hop", onHopEvent as EventListener);
       themeObserver.disconnect();
       window.clearTimeout(idleTimer);
       cancelAnimationFrame(raf);
